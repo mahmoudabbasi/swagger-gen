@@ -23,7 +23,7 @@
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
+			<artifactId>spring-boot-starter-webflux</artifactId>
 		</dependency>
 
 		<dependency>
@@ -34,7 +34,7 @@
 
 		<dependency>
 			<groupId>org.springdoc</groupId>
-			<artifactId>springdoc-openapi-ui</artifactId>
+			<artifactId>springdoc-openapi-webflux-ui</artifactId>
 			<version>1.6.14</version>
 		</dependency>
 
@@ -93,7 +93,7 @@
 								ApiUtil.java
 							</supportingFilesToGenerate>
 							<configOptions>
-<!--								<reactive>true</reactive>-->
+								<reactive>true</reactive>
 								<delegatePattern>true</delegatePattern>
 								<serializableModel>true</serializableModel>
 							</configOptions>
