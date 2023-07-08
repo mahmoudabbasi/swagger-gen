@@ -21,7 +21,6 @@ public class ExceptionTranslator {
         Error error = new Error();
         error.setCode(code);
         error.setMessage(message);
-
         return error ;
     }
 }
