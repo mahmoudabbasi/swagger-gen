@@ -26,11 +26,11 @@
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 
-		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
-			<optional>true</optional>
-		</dependency>
+<!--		<dependency>-->
+<!--			<groupId>org.projectlombok</groupId>-->
+<!--			<artifactId>lombok</artifactId>-->
+<!--			<optional>true</optional>-->
+<!--		</dependency>-->
 
 		<dependency>
 			<groupId>org.springdoc</groupId>
@@ -50,13 +50,6 @@
 			<version>1.6.8</version>
 		</dependency>
 
-
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-		</dependency>
-
-
 	</dependencies>
 
 	<build>
@@ -64,34 +57,24 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-				<configuration>
-					<excludes>
-						<exclude>
-							<groupId>org.projectlombok</groupId>
-							<artifactId>lombok</artifactId>
-						</exclude>
-					</excludes>
-				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.openapitools</groupId>
 				<artifactId>openapi-generator-maven-plugin</artifactId>
-				<version>5.4.0</version>
+				<version>6.6.0</version>
 				<executions>
 					<execution>
 						<goals>
 							<goal>generate</goal>
 						</goals>
 						<configuration>
-							<inputSpec>
-								${project.basedir}/src/main/resources/api/api.yml
-							</inputSpec>
+							<inputSpec>${project.basedir}/src/main/resources/swagger/api.yaml</inputSpec>
 							<generatorName>spring</generatorName>
 							<apiPackage>com.openapi.gen.springboot.api</apiPackage>
 							<modelPackage>com.openapi.gen.springboot.dto</modelPackage>
-							<supportingFilesToGenerate>
-								ApiUtil.java
-							</supportingFilesToGenerate>
+							<supportingFilesToGenerate>ApiUtil.java</supportingFilesToGenerate>
+							<library>spring-boot</library>
+
 							<configOptions>
 <!--								<reactive>true</reactive>-->
 								<delegatePattern>true</delegatePattern>
@@ -101,6 +84,8 @@
 					</execution>
 				</executions>
 			</plugin>
+
+			
 
 		</plugins>
 	</build>
