@@ -72,9 +72,14 @@ components:
           type: string
           description: Phone number
           example: 9999999999
-#          pattern: '\+[0-9]{10}'
           x-constraints: "@EvenLong"
 #          x-constraints: "@Capitalized(required = true)"
+        cell:
+          type: string
+          description: Phone number
+          example: 9999999999
+          pattern: '^[0-9]{10}$'
+    
     Error:
       type: object
       properties:
