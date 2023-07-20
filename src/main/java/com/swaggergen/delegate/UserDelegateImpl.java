@@ -28,6 +28,9 @@ public class UserDelegateImpl implements UserApiDelegate {
 
     @Override
     public ResponseEntity<UserDTO> getUserById(UUID id) {
+
+        
+
 //        return UserApiDelegate.super.getUserById(id);
         return ResponseEntity.ok(userService.getUserById(id)) ;
     }
