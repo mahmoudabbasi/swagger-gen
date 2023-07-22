@@ -1,4 +1,4 @@
-openapi: "3.0.1"
+openapi: "3.0.3"
 
 info:
   title: "User"
@@ -6,20 +6,21 @@ info:
   description: User API
 
 servers:
-  - url: http://localhost:8081/api
+  - url: http://localhost:8080/api
     description: Local server
 
 paths:
-
   /user:
     post:
       summary: Save User
       operationId: saveUser
       requestBody:
+        required: true
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/UserDTO'
+
       responses:
         200:
           description: OK
@@ -55,6 +56,7 @@ components:
       description: Data element for User
       required:
         - email
+        - ssn
       properties:
         id:
           type: string
@@ -66,12 +68,45 @@ components:
           minLength: 3
         lastName:
           type: string
+        ssn:
+          type: string
+          description: Phone number
+          example: 9999999999
+#          x-constraints: "@EvenLong"
+        #          x-constraints: "@Capitalized(required = true)"
+        cell:
+          type: string
+          description: Phone number
+          example: 9999999999
+#          pattern: '^[0-9]{10}$'
 
     Error:
       type: object
       properties:
-        code:
+        errorCode:
           type: integer
           format: int32
-        message:
+        errorMessage:
           type: string
+    ErrorMethod:
+      type: object
+      properties:
+        errorCode:
+          type: integer
+          format: int32
+        errorMessage:
+          type: string
+        field:
+          type: string
+    ErrorModel:
+      type: object
+      properties:
+        errorCode:
+          type: integer
+          format: int32
+        errorDesc:
+          type: string
+        field:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorMethod'

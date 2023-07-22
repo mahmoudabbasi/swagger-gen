@@ -96,6 +96,7 @@
 								<reactive>true</reactive>
 								<delegatePattern>true</delegatePattern>
 								<serializableModel>true</serializableModel>
+								<interfaceOnly>true</interfaceOnly>
 							</configOptions>
 						</configuration>
 					</execution>
