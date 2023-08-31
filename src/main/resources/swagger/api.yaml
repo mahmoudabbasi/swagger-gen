@@ -1,0 +1,162 @@
+openapi: "3.0.3"
+
+info:
+  title: "User"
+  version: "1"
+  description: User API
+
+servers:
+  - url: http://localhost:8081/api/v1
+    description: Local server
+
+paths:
+  /user:
+    post:
+      summary: Save User
+      operationId: saveUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserDTO'
+
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserDTO'
+
+  /user/{id}:
+    get:
+      summary: Get User By Id
+      operationId: getUserById
+      parameters:
+        - name: id
+          in: path
+          description: Unique Id of an User
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserDTO'
+
+  /recommend/{nationalId}:
+    get:
+      summary: Get repeat nationalId
+      operationId: getNationalId
+      parameters:
+        - name: nationalId
+          in: path
+          description: nationalId a User
+          required: true
+          schema:
+            type: string
+            pattern: '^[0-9]{10}$'
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListRepeat'
+
+
+components:
+  schemas:
+    UserDTO:
+      type: object
+      description: Data element for User
+      required:
+        - email
+        - ssn
+      properties:
+        id:
+          type: string
+          format: uuid
+        email:
+          type: string
+        firstName:
+          type: string
+          minLength: 3
+        lastName:
+          type: string
+        ssn:
+          type: string
+          description: Phone number
+          example: 9999999999
+          x-constraints: "@EvenLong"
+#          x-constraints: "@Capitalized(required = true)"
+        cell:
+          type: string
+          description: Phone number
+          example: 9999999999
+          pattern: '^[0-9]{10}$'
+    
+    Error:
+      type: object
+      properties:
+        errorCode:
+          type: integer
+          format: int32
+        errorMessage:
+          type: string
+    ErrorMethod:
+      type: object
+      properties:
+        errorCode:
+          type: integer
+          format: int32
+        errorMessage:
+          type: string
+        field:
+          type: string
+    ErrorModel:
+      type: object
+      properties:
+        errorCode:
+          type: integer
+          format: int32
+        errorDesc:
+          type: string
+        field:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorMethod'
+    Repeat:
+      type: object
+      properties:
+        id:
+          type: integer
+        nationalId:
+          type: string
+        amount:
+          type: string
+        fromAccount:
+          type: string
+        status:
+          type: string
+        method:
+          type: string
+        counts:
+          type: string
+        chargeType:
+          type: string
+        topUpchargeType:
+          type: string
+        createDate:
+          type: string
+          format: date-time
+
+    ListRepeat:
+          type: array
+          items:
+            $ref: '#/components/schemas/Repeat'
