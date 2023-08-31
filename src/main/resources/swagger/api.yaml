@@ -6,7 +6,7 @@ info:
   description: User API
 
 servers:
-  - url: http://localhost:8080/api
+  - url: http://localhost:8081/api/v1
     description: Local server
 
 paths:
@@ -48,6 +48,27 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UserDTO'
+
+  /recommend/{nationalId}:
+    get:
+      summary: Get repeat nationalId
+      operationId: getNationalId
+      parameters:
+        - name: nationalId
+          in: path
+          description: nationalId a User
+          required: true
+          schema:
+            type: string
+            pattern: '^[0-9]{10}$'
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListRepeat'
+
 
 components:
   schemas:
@@ -110,3 +131,32 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ErrorMethod'
+    Repeat:
+      type: object
+      properties:
+        id:
+          type: integer
+        nationalId:
+          type: string
+        amount:
+          type: string
+        fromAccount:
+          type: string
+        status:
+          type: string
+        method:
+          type: string
+        counts:
+          type: string
+        chargeType:
+          type: string
+        topUpchargeType:
+          type: string
+        createDate:
+          type: string
+          format: date-time
+
+    ListRepeat:
+          type: array
+          items:
+            $ref: '#/components/schemas/Repeat'

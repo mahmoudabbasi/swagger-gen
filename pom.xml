@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.7.7</version>
+		<version>2.3.8.RELEASE</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.example</groupId>
@@ -17,6 +17,14 @@
 		<java.version>11</java.version>
 	</properties>
 	<dependencies>
+
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-mongodb</artifactId>
+		</dependency>
+
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-validation</artifactId>
@@ -45,6 +53,13 @@
 			<version>0.2.4</version>
 		</dependency>
 
+
+<!--		<dependency>-->
+<!--			<groupId>org.springframework.boot</groupId>-->
+<!--			<artifactId>spring-boot-starter-data-mongodb</artifactId>-->
+<!--		</dependency>-->
+
+
 <!--		<dependency>-->
 <!--			<groupId>javax.validation</groupId>-->
 <!--			<artifactId>validation-api</artifactId>-->
@@ -58,6 +73,13 @@
 		</dependency>
 
 
+		<dependency>
+			<groupId>ir.bmi.identity</groupId>
+			<artifactId>client-security-starter-v2</artifactId>
+			<!--            <version>1.1.0-SNAPSHOT</version>-->
+			<version>1.3.0</version>
+
+		</dependency>
 
 		
 

@@ -1,6 +1,5 @@
 package com.swaggergen.config;
 
-import com.openapi.gen.springboot.dto.Error;
 import com.openapi.gen.springboot.dto.ErrorMethod;
 import com.openapi.gen.springboot.dto.ErrorModel;
 import com.swaggergen.exception.ExceptionMessages;
@@ -12,8 +11,11 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.context.request.WebRequest;
 
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
 import java.util.ArrayList;
 
 @Slf4j
@@ -29,19 +31,45 @@ public class ExceptionTranslator  {
     }
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<ErrorModel> handleConstraintViolation(Exception e,
-                                                                    WebRequest request) {
+    public ResponseEntity<ErrorModel> handleConstraintViolation(Exception e, WebRequest request) {
         return ResponseEntity.ok(generateError("test", 401)) ;
     }
 
 
+
+    @ExceptionHandler ({ConstraintViolationException.class})
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    protected ResponseEntity<Object> handleConstraintViolationException(
+            ConstraintViolationException ex) {
+        ErrorModel errorModel = new ErrorModel();
+        errorModel.setErrorCode(HttpStatus.BAD_REQUEST.value());
+        errorModel.setErrorDesc(ExceptionMessages.Global.NOT_VALID_ARGUMENTS );
+
+        for (ConstraintViolation fieldError : ex.getConstraintViolations()) {
+            ErrorMethod apiValidationError = new ErrorMethod() ;
+            apiValidationError.setErrorCode(400);
+            apiValidationError.setErrorMessage(fieldError.getMessage()); ;
+            apiValidationError.setField(fieldError.getPropertyPath().toString());
+
+//                    .field(fieldError.getField())
+//                    .message(this.getMessage(fieldError.getDefaultMessage(), locale))
+//                    .rejectedValue(fieldError.getRejectedValue())
+//                    .object(fieldError.getObjectName())
+//                    .build();
+
+            errorModel.addFieldItem(apiValidationError);
+        }
+
+        return ResponseEntity.badRequest().body(errorModel);
+
+    }
 
 
 
     @ExceptionHandler(value = {MethodArgumentNotValidException.class})
     public ResponseEntity<ErrorModel> handleMethodArgumentNotValid(MethodArgumentNotValidException ex) {
 
-         ErrorModel errorModel = new ErrorModel();
+        ErrorModel errorModel = new ErrorModel();
         errorModel.setErrorCode(HttpStatus.BAD_REQUEST.value());
         errorModel.setErrorDesc(ExceptionMessages.Global.NOT_VALID_ARGUMENTS );
 
